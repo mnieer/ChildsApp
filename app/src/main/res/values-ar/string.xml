@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ChildsApp</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">صحة الطفل</string>
+    <string name="child_development_title">تطور الطفل</string>
+    <string name="child_nuts_title">تغذية الطفل</string>
+
+    <!--Languages -->
+    <string name="ar_lang">العربيه</string>
+    <string name="en_lang">الانجليزية</string>
+
+</resources>
