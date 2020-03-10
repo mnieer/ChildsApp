@@ -8,7 +8,41 @@
     <string name="child_nuts_title">Child Nuts</string>
 
     <!--Languages -->
+    <string name="choose_lang_title">Choose Language</string>
+    <string name="selected_lang_is_lbl">Selected Language is </string>
     <string name="ar_lang">Arabic</string>
     <string name="en_lang">English</string>
+    <string name="save_btn">Save</string>
+    <string name="exit_btn">Exit</string>
+
+    <!-- Login UI -->
+    <string name="login_lbl">Login</string>
+    <string name="email_lbl">Email</string>
+    <string name="password_lbl">Password</string>
+    <string name="enter_lbl">Enter</string>
+    <string name="register_new_account_lbl">No Account ? Sign up</string>
+    <string name="processing_lbl">Processing</string>
+    <string name="user_not_registered_msg">User not Registered</string>
+    <string name="fill_all_fields_lbl">Please fill all fields</string>
+    <string name="user_not_found_msg">Login could not completed. User not found</string>
+
+    <!-- Registration UI -->
+    <string name="register_form_title">Registration Form</string>
+    <string name="username_lbl">Username</string>
+    <string name="full_name_lbl">Full Name</string>
+    <string name="birthdate_lbl">Birth Date</string>
+    <string name="loading_lbl">Loading</string>
+    <string name="submit_lbl">Submit</string>
+    <string name="registration_success_msg">Registeration Succesful</string>
+    <string name="process_failed_msg">Opss!! Process Failed</string>
+    <string name="alread_registered_login_msg">already registered ? Login</string>
+
+    <!-- Posts -->
+    <string name="add_new_post_lbl">اضافة مقال</string>
+
+    <!-- Chatbot UI -->
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
 
 </resources>

@@ -26,7 +26,7 @@ public class SpashUI extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SpashUI.this, MainActivity.class);
+                Intent mainIntent = new Intent(SpashUI.this, LoginUI.class);
                 startActivity(mainIntent);
                 finish();
             }

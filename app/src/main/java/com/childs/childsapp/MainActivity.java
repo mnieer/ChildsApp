@@ -1,9 +1,11 @@
 package com.childs.childsapp;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.GridLayout;
@@ -15,6 +17,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.childs.blog.ChildNutsBlog;
+import com.childs.dialogs.LanguageDialog;
+import com.childs.operations.GeneralFunctions;
+import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
 
 import java.util.ArrayList;
@@ -28,14 +34,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         //initilize session
         sessionManager = new SessionManager(this);
 
+        //check if user choose language
+        if(sessionManager.getStringValue("app_lang")!=null && !sessionManager.getStringValue("app_lang").equals("-1"))
+            GeneralFunctions.changeLocale(MainActivity.this,sessionManager.getStringValue("app_lang"));
+        else {
+            LanguageDialog dialog = new LanguageDialog(this);
+            dialog.show();
+        }
+
+        setContentView(R.layout.activity_main);
+
         //get icon grids
         mainGrid = (GridLayout) findViewById(R.id.mainGrid);
-
         //Set Event
         setSingleEvent(mainGrid);
         //setToggleEvent(mainGrid);
@@ -69,45 +83,31 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < mainGrid.getChildCount(); i++) {
             //You can see , all child item is CardView , so we just cast object to CardView
             CardView cardView = (CardView) mainGrid.getChildAt(i);
-            final int finalI = i;
+            final int finalIndex = i;
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(MainActivity.this,ActivityOne.class);
-                    intent.putExtra("info","This is activity from card item index  "+finalI);
-                    startActivity(intent);
+                    switch (finalIndex)
+                    {
+                        case 1 :
+                            Intent intent = new Intent(MainActivity.this, ChildNutsBlog.class);
+                            intent.putExtra("user","");
+                            startActivity(intent);
+                         break;
+                    }
+
 
                 }
             });
         }
     }
 
-    //this custom dialog to choose selected language bu the user
-    private void shoLanguagesDialog() {
-
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.choose_language_dialog);
-        List<String> stringList=new ArrayList<>();  // here is list
-        for(int i=0;i<2;i++) {
-            if (i==0){
-                stringList.add(getResources().getString(R.string.ar_lang));
-            }else {
-                stringList.add(getResources().getString(R.string.en_lang));
-            }
-        }
-
-        //create languages radio buttons
-        RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.langs_radio_group);
-
-        for(int i=0;i<stringList.size();i++){
-            RadioButton rb=new RadioButton(this); // dynamically creating RadioButton and adding to RadioGroup.
-            rb.setText(stringList.get(i));
-            rg.addView(rb);
-
-            
-        }
+    @Override
+    protected void attachBaseContext(Context base) {
+        sessionManager = new SessionManager(base);
+        super.attachBaseContext(LocaleManager.setLocale(base,sessionManager.getStringValue("app_lang")));
     }
+
+
 }

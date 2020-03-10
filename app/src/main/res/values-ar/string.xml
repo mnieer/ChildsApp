@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChildsApp</string>
+    <string name="app_name">صحة الطفل</string>
     <string name="action_settings">Settings</string>
 
     <!-- Dashboard -->
@@ -8,7 +8,43 @@
     <string name="child_nuts_title">تغذية الطفل</string>
 
     <!--Languages -->
+    <string name="choose_lang_title">أختيار اللغة</string>
+    <string name="selected_lang_is_lbl">اللغة المختاره هي </string>
     <string name="ar_lang">العربيه</string>
     <string name="en_lang">الانجليزية</string>
+    <string name="save_btn">حفظ</string>
+    <string name="exit_btn">خروج</string>
+
+    <!-- Login UI -->
+    <string name="login_lbl">تسجيل الدخول</string>
+    <string name="email_lbl">البريد الالكتروني</string>
+    <string name="password_lbl">كلمة المرور</string>
+    <string name="enter_lbl">دخول</string>
+    <string name="register_new_account_lbl">أنشا حساب جديد</string>
+    <string name="processing_lbl">قيد المعالجه</string>
+    <string name="user_not_registered_msg">لا يوجد حساب للمستخدم</string>
+    <string name="fill_all_fields_lbl">يرجى تعبئة جميع الحقول</string>
+    <string name="user_not_found_msg">لم يكتمل تسجيل الدخول. المستخدم غير مسجل لدينا</string>
+
+    <!-- Registration UI -->
+    <string name="register_form_title">نموذج التسجيل</string>
+    <string name="username_lbl">اسم المستخدم</string>
+    <string name="loading_lbl">جاري التحميل</string>
+    <string name="submit_lbl">اعتماد</string>
+    <string name="full_name_lbl">الاسم الكامل</string>
+    <string name="birthdate_lbl">تاريخ الميلاد</string>
+    <string name="process_failed_msg">فشلت العملية</string>
+    <string name="registration_success_msg">تمت عملية التسجيل بنجاح</string>
+    <string name="alread_registered_login_msg">هل انت مسجل مسبقا ؟ اذهب للدخول</string>
+
+    <!-- Posts -->
+    <string name="add_new_post_lbl">اضافة مقال</string>
+
+    <!-- Chatbot UI -->
+    <string name="speech_prompt">احكي شيئا&#8230;</string>
+    <string name="speech_not_supported">الجهاز لا يدعم خاصية التعرف على الصوت</string>
+    <string name="tap_on_mic">اضغط على الميكروفون</string>
+
+
 
 </resources>

@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -31,10 +33,28 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
-
     // CardView
     implementation "androidx.cardview:cardview:1.0.0"
-
     // Glide
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    //firebase database
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.1'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.karumi:dexter:6.0.2'
+    implementation 'com.ibm.watson.developer_cloud:java-sdk:3.7.2'
+    implementation 'com.github.kittinunf.fuel:fuel-android:1.9.0'
+    implementation 'com.github.kittinunf.fuel:fuel:<latest-version>'
+
+
+
+
+
+
+
 }
+

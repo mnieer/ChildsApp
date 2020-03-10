@@ -136,7 +136,15 @@ public class SessionManager {
     //get string value
     public String getStringValue(String key)
     {
-        //get value
-        return pref.getString(key, null);
+        String val = "-1";
+        try {
+            //get value
+            val =  pref.getString(key, null);
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return val;
     }
 }
