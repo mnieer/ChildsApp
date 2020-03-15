@@ -186,13 +186,13 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:src="@drawable/team_time"
+                    android:src="@drawable/ic_chat"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="Team"
+                    android:text="@string/chatbot_lbl"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"

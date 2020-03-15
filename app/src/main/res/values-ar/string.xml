@@ -6,6 +6,8 @@
     <string name="dashboard_title">صحة الطفل</string>
     <string name="child_development_title">تطور الطفل</string>
     <string name="child_nuts_title">تغذية الطفل</string>
+    <string name="vaccinations_title">التطعيمات</string>
+    <string name="vaccinations_list_title">قائمة التطعيمات</string>
 
     <!--Languages -->
     <string name="choose_lang_title">أختيار اللغة</string>
@@ -41,7 +43,9 @@
     <string name="add_new_post_lbl">اضافة مقال</string>
 
     <!-- Chatbot UI -->
-    <string name="speech_prompt">احكي شيئا&#8230;</string>
+    <string name="chatbot_lbl">ChatBot</string>
+    <string name="send_lbl">ارسال</string>
+    <string name="speech_prompt">اكتب ما يخطر في بالك &#8230;</string>
     <string name="speech_not_supported">الجهاز لا يدعم خاصية التعرف على الصوت</string>
     <string name="tap_on_mic">اضغط على الميكروفون</string>
 

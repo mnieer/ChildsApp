@@ -1,36 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:fitsSystemWindows="true"
     tools:context="com.childs.chatbot.ChatBotUI">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/user_statement_container">
+    <!-- <android.support.design.widget.AppBarLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+         <android.support.v7.widget.Toolbar
+             android:id="@+id/toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+             android:background="?attr/colorPrimary"/>
+     </android.support.design.widget.AppBarLayout>-->
 
-        <TextView
-            android:id="@+id/tv_chat_display"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp" />
-    </ScrollView>
+    <include layout="@layout/chatbot_content_chat_room" />
 
-    <com.google.android.material.textfield.TextInputLayout
-
-        android:id="@+id/user_statement_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <EditText
-            android:id="@+id/et_user_statement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your Message:"
-            android:imeOptions="actionDone"
-            android:inputType="textShortMessage" />
-    </com.google.android.material.textfield.TextInputLayout>
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

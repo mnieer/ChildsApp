@@ -1,30 +1,24 @@
 package com.childs.childsapp;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.childs.activity.VaccinationsUI;
 import com.childs.blog.ChildNutsBlog;
+import com.childs.operations.FirebaseLoadSpinners;
+import com.childs.chatbot.ChatBotUI;
 import com.childs.dialogs.LanguageDialog;
 import com.childs.operations.GeneralFunctions;
 import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
+        //fill database with spinners
+        FirebaseLoadSpinners object = new FirebaseLoadSpinners(this);
+        object.insertVaccinationTypes();
 
         //get icon grids
         mainGrid = (GridLayout) findViewById(R.id.mainGrid);
@@ -84,17 +82,30 @@ public class MainActivity extends AppCompatActivity {
             //You can see , all child item is CardView , so we just cast object to CardView
             CardView cardView = (CardView) mainGrid.getChildAt(i);
             final int finalIndex = i;
+
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = null;
                     switch (finalIndex)
                     {
                         case 1 :
-                            Intent intent = new Intent(MainActivity.this, ChildNutsBlog.class);
+                            intent = new Intent(MainActivity.this, ChildNutsBlog.class);
                             intent.putExtra("user","");
                             startActivity(intent);
                          break;
+
+                        case 3 :
+                            intent = new Intent(MainActivity.this, ChatBotUI.class);
+                            intent.putExtra("user","");
+                            startActivity(intent);
+                            break;
+
+                        case 4:
+                            intent = new Intent(MainActivity.this, VaccinationsUI.class);
+                            intent.putExtra("user","");
+                            startActivity(intent);
+                            break;
                     }
 
 

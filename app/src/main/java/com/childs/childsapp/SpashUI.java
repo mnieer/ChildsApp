@@ -10,7 +10,7 @@ public class SpashUI extends Activity {
     /**
      * Duration of wait
      **/
-    private final int SPLASH_DISPLAY_LENGTH = 5000;
+    private final int SPLASH_DISPLAY_LENGTH = 1000;
 
     /**
      * Called when the activity is first created.

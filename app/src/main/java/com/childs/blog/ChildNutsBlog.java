@@ -48,6 +48,7 @@ public class ChildNutsBlog extends AppCompatActivity {
         {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
+            setTitle(getResources().getString(R.string.child_nuts_title));
             //initialize recyclerview and FIrebase objects
             recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
