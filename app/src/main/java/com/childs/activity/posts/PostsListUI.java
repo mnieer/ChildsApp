@@ -1,10 +1,11 @@
-package com.childs.blog;
+package com.childs.activity.posts;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.TextPaint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.childs.childsapp.R;
 import com.childs.childsapp.RegisterNewUserUI;
-import com.childs.objects.Blog;
+import com.childs.objects.Post;
 import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -31,14 +32,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-public class ChildNutsBlog extends AppCompatActivity {
+public class PostsListUI extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
+    private FirebaseRecyclerAdapter<Post, BlogViewHolder> firebaseRecyclerAdapter;
     SessionManager sessionManager;
-
+    String postCategory = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,14 @@ public class ChildNutsBlog extends AppCompatActivity {
         {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            setTitle(getResources().getString(R.string.child_nuts_title));
+
+            postCategory = getIntent().getExtras().getString("postCategory");
+
+            if(postCategory.equals("1"))
+                setTitle(getResources().getString(R.string.child_nuts_title));
+            else if(postCategory.equals("2"))
+                setTitle(getResources().getString(R.string.education_title));
+
             //initialize recyclerview and FIrebase objects
             recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -60,14 +68,15 @@ public class ChildNutsBlog extends AppCompatActivity {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     if (mAuth.getCurrentUser() == null) {
-                        Intent loginIntent = new Intent(ChildNutsBlog.this, RegisterNewUserUI.class);
+                        Intent loginIntent = new Intent(PostsListUI.this, RegisterNewUserUI.class);
                         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(loginIntent);
                     }
                 }
             };
 
-            getPosts();
+            //get posts list
+            getPosts(postCategory);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -104,12 +113,16 @@ public class ChildNutsBlog extends AppCompatActivity {
 
         public void setDesc(String desc) {
             TextView post_desc = mView.findViewById(R.id.post_desc_txtview);
-            post_desc.setText(desc);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                post_desc.setText(Html.fromHtml(desc, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                post_desc.setText(Html.fromHtml(desc));
+            }
         }
 
         public void setImageUrl(Context ctx, String imageUrl) {
             ImageView post_image = mView.findViewById(R.id.post_image);
-            Picasso.with(ctx).load(imageUrl).into(post_image);
+            Picasso.with(ctx).load(R.drawable.child_nuts_post_default).into(post_image);
         }
 
         public void setUserName(String userName) {
@@ -132,10 +145,10 @@ public class ChildNutsBlog extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.add_new_post) {
-            startActivity(new Intent(ChildNutsBlog.this, AddNewPostUI.class));
+            startActivity(new Intent(PostsListUI.this, NewPostUI.class));
         } else if (id == R.id.action_settings) {
             mAuth.signOut();
-            Intent logouIntent = new Intent(ChildNutsBlog.this, RegisterNewUserUI.class);
+            Intent logouIntent = new Intent(PostsListUI.this, RegisterNewUserUI.class);
             logouIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(logouIntent);
         }
@@ -144,28 +157,31 @@ public class ChildNutsBlog extends AppCompatActivity {
     }
 
     //get postins details
-    private void getPosts()
+    private void getPosts(String postCategory)
     {
-        Query query = mDatabase.child("Blogs");
-        FirebaseRecyclerOptions<Blog> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Blog>()
-                .setQuery(query, Blog.class)
+        //get all posts which type of nuts
+        //1 eqlual nuts posts
+        Query query = mDatabase.child("posts").orderByChild("category").equalTo(postCategory);
+
+        FirebaseRecyclerOptions<Post> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Post>()
+                .setQuery(query, Post.class)
                 .build();
 
         //create firebase recycle adapter
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(firebaseRecyclerOptions) {
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Post, BlogViewHolder>(firebaseRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull BlogViewHolder viewHolder, int position, @NonNull Blog model) {
+            protected void onBindViewHolder(@NonNull BlogViewHolder viewHolder, int position, @NonNull Post model) {
                 //bind model to item view
                 final String post_key = getRef(position).getKey().toString();
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setDesc(model.getDesc());
-                viewHolder.setImageUrl(getApplicationContext(), model.getImageUrl());
+                viewHolder.setTitle(sessionManager.getStringValue("app_lang").equals("en") ? model.getEn_title() :model.getAr_title());
+                viewHolder.setDesc(sessionManager.getStringValue("app_lang").equals("en") ? model.getEn_desc() :model.getAr_desc());
+                viewHolder.setImageUrl(getApplicationContext(), model.getImgURL());
                 viewHolder.setUserName(model.getUsername());
                 //on click open post
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent singleActivity = new Intent(ChildNutsBlog.this, ShowPost.class);
+                        Intent singleActivity = new Intent(PostsListUI.this, ShowPost.class);
                         singleActivity.putExtra("PostID", post_key);
                         startActivity(singleActivity);
                     }

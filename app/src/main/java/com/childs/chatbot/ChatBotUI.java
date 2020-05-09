@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.childs.childsapp.R;
+import com.childs.operations.GeneralFunctions;
 import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
@@ -85,8 +86,9 @@ public class ChatBotUI extends AppCompatActivity {
         mAdapter = new ChatAdapter(messageArrayList);
         microphoneHelper = new MicrophoneHelper(this);
 
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(layoutManager);
@@ -163,7 +165,16 @@ public class ChatBotUI extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInternetConnection()) {
-                    sendMessage();
+
+                    //check edit text is filled
+                    String inputmessage = inputMessage.getText().toString().trim();
+                    if(inputmessage.matches(""))
+                    {
+                        GeneralFunctions.populateToastMsg(getApplicationContext(),getResources().getString(R.string.type_something_in_text_box_lbl),true);
+                    }
+                    else {
+                        sendMessage();
+                    }
                 }
             }
         });
@@ -218,11 +229,14 @@ public class ChatBotUI extends AppCompatActivity {
     private void sendMessage() {
 
         final String inputmessage = this.inputMessage.getText().toString().trim();
+
+
         if(!this.initialRequest) {
             Message inputMessage = new Message();
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("1");
             messageArrayList.add(inputMessage);
+            Log.d("ChatBotServer","Input>>"+inputMessage);
         }
         else
         {
@@ -230,7 +244,7 @@ public class ChatBotUI extends AppCompatActivity {
             inputMessage.setMessage(inputmessage);
             inputMessage.setId("100");
             this.initialRequest = false;
-            Toast.makeText(getApplicationContext(),"Tap on the message for Voice",Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"Tap on the message for Voice",Toast.LENGTH_LONG).show();
 
         }
 
@@ -259,14 +273,16 @@ public class ChatBotUI extends AppCompatActivity {
 
                     String outputText = "";
                     int length=response.getOutput().getText().size();
-                    Log.i(TAG, "run: "+length);
+                    Log.d("ChatBotServer","Output>>"+response.getOutput().getText());
+                    /**
                     if(length>1) {
                         for (int i = 0; i < length; i++) {
-                            outputText += '\n' + response.getOutput().getText().get(i).trim();
+                            outputText += "\n" + response.getOutput().getText().get(i).trim();
                         }
                     }
                     else
                         outputText = response.getOutput().getText().get(0);
+                     **/
 
                     Log.i(TAG, "run: "+outputText);
                     //Passing Context of last conversation
@@ -276,17 +292,24 @@ public class ChatBotUI extends AppCompatActivity {
                         context = response.getContext();
 
                     }
+
                     Message outMessage=new Message();
                     if(response!=null)
                     {
                         if(response.getOutput()!=null && response.getOutput().containsKey("text"))
                         {
                             ArrayList responseList = (ArrayList) response.getOutput().get("text");
-                            if(null !=responseList && responseList.size()>0){
-                                outMessage.setMessage(outputText);
-                                outMessage.setId("2");
+
+                                if (null != responseList && responseList.size() > 0) {
+                                    //loop on the list
+                                    for(int i=0;i<responseList.size();i++) {
+                                        outMessage = new Message();
+                                        outMessage.setMessage(response.getOutput().getText().get(i).trim());
+                                        outMessage.setId("2");
+                                        messageArrayList.add(outMessage);
+                                    }
+                                }
                             }
-                            messageArrayList.add(outMessage);
                         }
 
                         runOnUiThread(new Runnable() {
@@ -302,7 +325,7 @@ public class ChatBotUI extends AppCompatActivity {
 
 
                     }
-                } catch (Exception e) {
+                 catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -363,7 +386,7 @@ public class ChatBotUI extends AppCompatActivity {
             return true;
         }
         else {
-            Toast.makeText(this, " No Internet Connection available ", Toast.LENGTH_LONG).show();
+            GeneralFunctions.populateToastMsg(this, getResources().getString(R.string.internet_connection_unavailable_lbl), true);
             return false;
         }
 
@@ -459,5 +482,6 @@ public class ChatBotUI extends AppCompatActivity {
         sessionManager = new SessionManager(base);
         super.attachBaseContext(LocaleManager.setLocale(base,sessionManager.getStringValue("app_lang")));
     }
+
 
 }

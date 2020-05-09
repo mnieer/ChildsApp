@@ -1,6 +1,7 @@
 package com.childs.childsapp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.childs.operations.LocaleManager;
+import com.childs.session.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -121,5 +125,11 @@ public class LoginUI extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        SessionManager sessionManager = new SessionManager(base);
+        super.attachBaseContext(LocaleManager.setLocale(base,sessionManager.getStringValue("app_lang")));
     }
 }

@@ -1,21 +1,35 @@
 <resources>
     <string name="app_name">صحة الطفل</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">الاعدادات</string>
+    <string name="main_screen_lbl">القائمة الرئيسية</string>
+
 
     <!-- Dashboard -->
     <string name="dashboard_title">صحة الطفل</string>
     <string name="child_development_title">تطور الطفل</string>
     <string name="child_nuts_title">تغذية الطفل</string>
+    <string name="education_title">التربية</string>
     <string name="vaccinations_title">التطعيمات</string>
     <string name="vaccinations_list_title">قائمة التطعيمات</string>
+    <string name="send_report_list_title">اسال تقرير</string>
 
     <!--Languages -->
     <string name="choose_lang_title">أختيار اللغة</string>
+    <string name="select_pref_lang_msg">اختر اللغة المفضله للتطبيق</string>
     <string name="selected_lang_is_lbl">اللغة المختاره هي </string>
     <string name="ar_lang">العربيه</string>
     <string name="en_lang">الانجليزية</string>
     <string name="save_btn">حفظ</string>
     <string name="exit_btn">خروج</string>
+
+    <string-array name="languagesListArray">
+        <item>عربي</item>
+        <item>انجليزي</item>
+    </string-array>
+    <string-array name="languagesListVals">
+        <item>ar</item>
+        <item>en</item>
+    </string-array>
 
     <!-- Login UI -->
     <string name="login_lbl">تسجيل الدخول</string>
@@ -48,7 +62,30 @@
     <string name="speech_prompt">اكتب ما يخطر في بالك &#8230;</string>
     <string name="speech_not_supported">الجهاز لا يدعم خاصية التعرف على الصوت</string>
     <string name="tap_on_mic">اضغط على الميكروفون</string>
+    <string name="type_something_in_text_box_lbl">اكتب شيئا داخل الحقل</string>
+    <string name="internet_connection_unavailable_lbl">تعذر الاتصال بشبكة الانترنت</string>
 
-
+    <!-- Report -->
+    <string name="report_child_health_form">نموذج التبليغ عن حالة الطفل</string>
+    <string name="child_name_lbl">اسم الطفل</string>
+    <string name="child_sex_lbl">جنس الطفل</string>
+    <string name="child_age_lbl">عمر الطفل</string>
+    <string name="date_lbl">التاريخ</string>
+    <string name="parants_phone_no_lbl">رقم هاتف الوالدين</string>
+    <string name="weight_lbl">الوزن</string>
+    <string name="height_lbl">الطول</string>
+    <string name="temprature_lbl">الحرارة</string>
+    <string name="symptoms_lbl">الاعراض</string>
+    <string name="dr_name_lbl"> اسم الطبيب المختص</string>
+    <string name="medical_center_name_lbl">اسم المركز المسجل به الطفل</string>
+    <string name="medical_center_phone_lbl">رقم هاتف المركز</string>
+    <string name="any_nots_about_child_health_lbl">ملاحظات ( اذا كان هناك حساسة ضد شيء معين او غذاء معين )</string>
+    <string name="male_lbl">ذكر</string>
+    <string name="female_lbl">انثى</string>
+    <string name="cm_lbl">سم</string>
+    <string name="kg_lbl">كيلو غرام</string>
+    <string name="cancel_lbl">الغاء</string>
+    <string name="status_lbl">الحالة</string>
+    <string name="add_new_record_lbl">اضافة سجل جديد</string>
 
 </resources>

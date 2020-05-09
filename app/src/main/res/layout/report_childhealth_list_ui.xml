@@ -6,8 +6,8 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.childs.activity.posts.PostsListUI"
-    tools:showIn="@layout/childs_nuts_blog_main">
+    tools:context="com.childs.activity.report_child_health.ReportChildHeathListUI"
+    tools:showIn="@layout/report_childhealth_list_ui">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,4 +24,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

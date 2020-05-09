@@ -33,24 +33,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityOne" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SettingsPreferencesActivity" />
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar"  />
 
         <activity android:name=".LoginUI" />
         <activity android:name=".RegisterNewUserUI" />
         <activity android:name=".ProfileUI" />
         <activity
-            android:name="com.childs.blog.ChildNutsBlog"
+            android:name="com.childs.activity.posts.PostsListUI"
             android:label="@string/child_nuts_title"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.childs.activity.VaccinationsUI"
+            android:name="com.childs.activity.vaccination.VaccinationsUI"
             android:label="@string/child_nuts_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="com.childs.blog.ShowPost" />
-        <activity android:name="com.childs.blog.AddNewPostUI" />
-        <activity android:name="com.childs.chatbot.ChatBotUI" android:windowSoftInputMode="adjustResize" android:label="@string/chatbot_lbl" />
+        <activity android:name="com.childs.activity.posts.ShowPost" />
+        <activity android:name="com.childs.activity.posts.NewPostUI" />
+        <activity android:name="com.childs.activity.vaccination.VaccinationDetails" android:label="@string/child_nuts_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.childs.activity.vaccination.VaccinationsListUI" android:label="@string/child_nuts_title"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.childs.activity.report_child_health.ReportChildHealthDetailsUI" android:label="@string/report_child_health_form"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.childs.activity.report_child_health.ReportChildHeathListUI" android:label="@string/report_child_health_form"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.childs.chatbot.ChatBotUI" android:label="@string/chatbot_lbl" />
 
     </application>
 

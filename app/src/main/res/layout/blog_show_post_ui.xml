@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        tools:context="com.childs.blog.ShowPost">
+        tools:context="com.childs.activity.posts.ShowPost">
 
         <ImageView
             android:layout_width="match_parent"
@@ -34,6 +34,20 @@
             android:text="Post Description"
             android:id="@+id/singleDesc"/>
 
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtubePlayerView1"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"/>
+
+        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+            android:id="@+id/youtubePlayerView2"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"/>
+
+
         <Button
             android:id="@+id/deleteBtn"
             android:layout_width="match_parent"
@@ -43,6 +57,8 @@
             android:background="#FFEA0404"
             android:textColor="#fff"
             android:textStyle="bold"/>
+
+
 
     </LinearLayout>
 </ScrollView>
