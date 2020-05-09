@@ -60,6 +60,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.childs.chatbot.ChatBotUI" android:label="@string/chatbot_lbl" />
 
+        <activity android:name="com.childs.activity.posts.ChildFeedingPosts" android:label="@string/child_feeding_posts_by_ages_lbl"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -3,6 +3,8 @@ package com.childs.objects;
 public class Post {
     String ar_title;
 
+    String post_photo_url;
+
     public String getAr_title() {
         return ar_title;
     }
@@ -67,14 +69,20 @@ public class Post {
         this.username = username;
     }
 
+
+    public String getPost_photo_url() {
+        return post_photo_url;
+    }
+
+    public void setPost_photo_url(String post_photo_url) {
+        this.post_photo_url = post_photo_url;
+    }
+
     String en_title;
     String category;
     String imgURL;
     String ar_desc;
     String en_desc;
     String date;
-
-
-
     String username;
 }

@@ -1,6 +1,7 @@
 package com.childs.childsapp;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.childs.operations.LocaleManager;
+import com.childs.session.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -30,6 +33,7 @@ public class RegisterNewUserUI extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private TextView loginTxtView;
+    private SessionManager sessionManager;
     private final Calendar myCalendar = Calendar.getInstance();
 
     @Override
@@ -43,6 +47,7 @@ public class RegisterNewUserUI extends AppCompatActivity {
         usernameField = (EditText) findViewById(R.id.usernameField);
         passwordField = (EditText) findViewById(R.id.passwordField);
         birthDateField = (EditText) findViewById(R.id.birthDateField);
+        sessionManager = new SessionManager(this);
 
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -91,9 +96,8 @@ public class RegisterNewUserUI extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
-                            try {
-
-
+                            try
+                            {
                                 String user_id = mAuth.getCurrentUser().getUid();
                                 DatabaseReference current_user_db = mDatabase.child(user_id);
                                 current_user_db.child("Username").setValue(username);
@@ -124,4 +128,11 @@ public class RegisterNewUserUI extends AppCompatActivity {
 
         birthDateField.setText(sdf.format(myCalendar.getTime()));
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        sessionManager = new SessionManager(base);
+        super.attachBaseContext(LocaleManager.setLocale(base,sessionManager.getStringValue("app_lang")));
+    }
+
 }

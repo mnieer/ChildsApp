@@ -1,4 +1,5 @@
-package com.childs.activity.report_child_health;
+package com.childs.activity.posts;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.childs.activity.posts.NewPostUI;
 import com.childs.childsapp.LoginUI;
 import com.childs.childsapp.R;
 import com.childs.childsapp.RegisterNewUserUI;
-import com.childs.objects.ChildHealthReport;
+import com.childs.objects.Age;
+import com.childs.operations.GeneralFunctions;
 import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,23 +30,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
-public class ReportChildHeathListUI extends AppCompatActivity {
-    SessionManager sessionManager;
-    String age = "";
+public class ChildFeedingPosts extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseRecyclerAdapter<ChildHealthReport, ReportChildHeathListUI.ChildsHeathReportsViewHolder> firebaseRecyclerAdapter;
+    private FirebaseRecyclerAdapter<Age, ChildFeedingPosts.AgesViewHolder> firebaseRecyclerAdapter;
+    SessionManager sessionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.report_childhealth_list_ui);
-        try {
+        setContentView(R.layout.feeding_child_ages_list_ui);
+
+        try
+        {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            setTitle(getResources().getString(R.string.reports_list_lbl));
+            setTitle(getResources().getString(R.string.child_feeding_posts_by_ages_lbl));
             //initialize recyclerview and FIrebase objects
             recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -53,21 +56,19 @@ public class ReportChildHeathListUI extends AppCompatActivity {
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mAuth = FirebaseAuth.getInstance();
             sessionManager = new SessionManager(this);
-            age = getIntent().getExtras().getString("age");
-
             mAuthListener = new FirebaseAuth.AuthStateListener() {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     if (mAuth.getCurrentUser() == null) {
-                        Intent loginIntent = new Intent(ReportChildHeathListUI.this, LoginUI.class);
+                        Intent loginIntent = new Intent(ChildFeedingPosts.this, LoginUI.class);
                         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(loginIntent);
                     }
                 }
             };
 
-            //get reports from database
-            getReportsList();
+            //get child ages list
+            getChildAgesList();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -90,10 +91,24 @@ public class ReportChildHeathListUI extends AppCompatActivity {
         }
     }
 
+    public static class AgesViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+
+        public AgesViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setAge(String ageValue) {
+            TextView age = mView.findViewById(R.id.itemDescription);
+            age.setText(ageValue);
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.report_child_health_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -101,48 +116,55 @@ public class ReportChildHeathListUI extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.add_new_record) {
-            Intent addRecordIntent = new Intent(ReportChildHeathListUI.this, ReportChildHealthDetailsUI.class);
-            addRecordIntent.putExtra("key", "-1");
-            startActivity(addRecordIntent);
+        if (id == R.id.action_settings) {
+            return true;
+        } else if (id == R.id.add_new_post) {
+            startActivity(new Intent(ChildFeedingPosts.this, NewPostUI.class));
+        } else if (id == R.id.action_settings) {
+            mAuth.signOut();
+            Intent logouIntent = new Intent(ChildFeedingPosts.this, RegisterNewUserUI.class);
+            logouIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(logouIntent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    //get reports from database
-    private void getReportsList() {
-        Query query = mDatabase.child("ChildsHeathReports");//.orderByChild("age").equalTo(age);
-        FirebaseRecyclerOptions<ChildHealthReport> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<ChildHealthReport>()
-                .setQuery(query, ChildHealthReport.class)
+    //get postins details
+    private void getChildAgesList() {
+        Query query = mDatabase.child("child_ages");
+        FirebaseRecyclerOptions<Age> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Age>()
+                .setQuery(query, Age.class)
                 .build();
 
-        //query.equalTo(age);
-
         //create firebase recycle adapter
-        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ChildHealthReport, ReportChildHeathListUI.ChildsHeathReportsViewHolder>(firebaseRecyclerOptions) {
+        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Age, ChildFeedingPosts.AgesViewHolder>(firebaseRecyclerOptions) {
             @Override
-            protected void onBindViewHolder(@NonNull  ReportChildHeathListUI.ChildsHeathReportsViewHolder viewHolder, int position, @NonNull ChildHealthReport model) {
+            protected void onBindViewHolder(@NonNull ChildFeedingPosts.AgesViewHolder viewHolder, int position, @NonNull final Age model) {
                 //bind model to item view
                 final String key = getRef(position).getKey().toString();
-                viewHolder.setSymptomesDesc(model.getSymptomes());
-                viewHolder.setStatusDesc(model.getStatus());
+
+                viewHolder.setAge(sessionManager.getStringValue("app_lang").equals("en") ? model.getEn_name() : model.getAr_name());
+                //viewHolder.setId(model.getId());
                 //on click open post
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent singleActivity = new Intent(ReportChildHeathListUI.this, ReportChildHealthDetailsUI.class);
-                        singleActivity.putExtra("key", key);
+                        Intent singleActivity = new Intent(ChildFeedingPosts.this, PostsListUI.class);
+                        singleActivity.putExtra("age_id", model.getId());
+                        singleActivity.putExtra("postCategory", "1");
+
+                        //GeneralFunctions.populateToastMsg(getApplicationContext(),"Age is "+model.getAge(),true);
                         startActivity(singleActivity);
                     }
                 });
             }
 
             @Override
-            public ReportChildHeathListUI.ChildsHeathReportsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.report_childhealth_list_item, parent, false);
+            public ChildFeedingPosts.AgesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.feeding_child_ages_list_item, parent, false);
 
-                return new ReportChildHeathListUI.ChildsHeathReportsViewHolder (view);
+                return new ChildFeedingPosts.AgesViewHolder(view);
             }
         };
         recyclerView.setAdapter(firebaseRecyclerAdapter);
@@ -152,24 +174,5 @@ public class ReportChildHeathListUI extends AppCompatActivity {
     protected void attachBaseContext(Context base) {
         sessionManager = new SessionManager(base);
         super.attachBaseContext(LocaleManager.setLocale(base, sessionManager.getStringValue("app_lang")));
-    }
-
-    public static class ChildsHeathReportsViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-
-        public ChildsHeathReportsViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setSymptomesDesc(String symptomes) {
-            TextView symptomesTV = mView.findViewById(R.id.symptomes);
-            symptomesTV.setText(symptomes);
-        }
-
-        public void setStatusDesc(String status) {
-            TextView statusDesc = mView.findViewById(R.id.status);
-            statusDesc.setText(status);
-        }
     }
 }

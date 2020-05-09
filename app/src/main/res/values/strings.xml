@@ -11,6 +11,7 @@
     <string name="vaccinations_title">Vaccinations</string>
     <string name="vaccinations_list_title">Vaccinations List</string>
     <string name="send_report_list_title">Send Report</string>
+    <string name="notifications_list_title">Notifications</string>
 
 
     <!--Languages -->
@@ -56,6 +57,9 @@
 
     <!-- Posts -->
     <string name="add_new_post_lbl">اضافة مقال</string>
+    <string name="post_details_lbl">Posts Details</string>
+    <string name="publish_date_lbl">Publish date</string>
+    <string name="child_feeding_posts_by_ages_lbl">Child feeding by age</string>
 
     <!-- Chatbot UI -->
     <string name="chatbot_lbl">ChatBot</string>
@@ -68,6 +72,7 @@
 
     <!-- Report -->
     <string name="report_child_health_form">Report Child Heath</string>
+    <string name="reports_list_lbl">Reports List</string>
     <string name="child_name_lbl">Child Name</string>
     <string name="child_sex_lbl">Child Gender</string>
     <string name="child_age_lbl">Child Age</string>

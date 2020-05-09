@@ -11,7 +11,9 @@
     <string name="education_title">التربية</string>
     <string name="vaccinations_title">التطعيمات</string>
     <string name="vaccinations_list_title">قائمة التطعيمات</string>
-    <string name="send_report_list_title">اسال تقرير</string>
+    <string name="send_report_list_title">ارسال تقرير</string>
+    <string name="notifications_list_title">التنبيهات</string>
+
 
     <!--Languages -->
     <string name="choose_lang_title">أختيار اللغة</string>
@@ -55,6 +57,11 @@
 
     <!-- Posts -->
     <string name="add_new_post_lbl">اضافة مقال</string>
+    <string name="post_details_lbl">تفاصيل المقالة</string>
+    <string name="publish_date_lbl">تاريخ النشر</string>
+    <string name="child_feeding_posts_by_ages_lbl">تغذية الاطفال حسب العمر</string>
+
+
 
     <!-- Chatbot UI -->
     <string name="chatbot_lbl">ChatBot</string>
@@ -67,6 +74,7 @@
 
     <!-- Report -->
     <string name="report_child_health_form">نموذج التبليغ عن حالة الطفل</string>
+    <string name="reports_list_lbl">قائمة التليغات</string>
     <string name="child_name_lbl">اسم الطفل</string>
     <string name="child_sex_lbl">جنس الطفل</string>
     <string name="child_age_lbl">عمر الطفل</string>

@@ -55,7 +55,6 @@ public class ProfileUI extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
                 startActivityForResult(galleryIntent, GALLERY_REQ);

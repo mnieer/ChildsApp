@@ -19,9 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.childs.childsapp.LoginUI;
 import com.childs.childsapp.R;
 import com.childs.childsapp.RegisterNewUserUI;
 import com.childs.objects.Post;
+import com.childs.operations.GeneralFunctions;
 import com.childs.operations.LocaleManager;
 import com.childs.session.SessionManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -50,8 +53,10 @@ public class PostsListUI extends AppCompatActivity {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
+            //get post category
             postCategory = getIntent().getExtras().getString("postCategory");
 
+            //sset activity title
             if(postCategory.equals("1"))
                 setTitle(getResources().getString(R.string.child_nuts_title));
             else if(postCategory.equals("2"))
@@ -68,7 +73,7 @@ public class PostsListUI extends AppCompatActivity {
                 @Override
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     if (mAuth.getCurrentUser() == null) {
-                        Intent loginIntent = new Intent(PostsListUI.this, RegisterNewUserUI.class);
+                        Intent loginIntent = new Intent(PostsListUI.this, LoginUI.class);
                         loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(loginIntent);
                     }
@@ -122,7 +127,7 @@ public class PostsListUI extends AppCompatActivity {
 
         public void setImageUrl(Context ctx, String imageUrl) {
             ImageView post_image = mView.findViewById(R.id.post_image);
-            Picasso.with(ctx).load(R.drawable.child_nuts_post_default).into(post_image);
+            Picasso.with(ctx).load(imageUrl).into(post_image);
         }
 
         public void setUserName(String userName) {
@@ -161,7 +166,17 @@ public class PostsListUI extends AppCompatActivity {
     {
         //get all posts which type of nuts
         //1 eqlual nuts posts
-        Query query = mDatabase.child("posts").orderByChild("category").equalTo(postCategory);
+        Query query = null;
+
+
+        if(postCategory.equals("1")) {
+            //get post category
+            String age_id = getIntent().getExtras().getString("age_id");
+            query = mDatabase.child("posts").orderByChild("cat_age").equalTo(postCategory+"_"+age_id);
+
+        }
+        else
+            query = mDatabase.child("posts").orderByChild("category").equalTo(postCategory);
 
         FirebaseRecyclerOptions<Post> firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class)
@@ -175,7 +190,7 @@ public class PostsListUI extends AppCompatActivity {
                 final String post_key = getRef(position).getKey().toString();
                 viewHolder.setTitle(sessionManager.getStringValue("app_lang").equals("en") ? model.getEn_title() :model.getAr_title());
                 viewHolder.setDesc(sessionManager.getStringValue("app_lang").equals("en") ? model.getEn_desc() :model.getAr_desc());
-                viewHolder.setImageUrl(getApplicationContext(), model.getImgURL());
+                viewHolder.setImageUrl(getApplicationContext(), model.getPost_photo_url());
                 viewHolder.setUserName(model.getUsername());
                 //on click open post
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.childs.activity.posts.PostsListUI;
 import com.childs.childsapp.R;
@@ -57,6 +58,11 @@ public class ReportChildHealthDetailsUI extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_child_heath_ui);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(getResources().getString(R.string.report_child_health_form));
+
         sessionManager = new SessionManager(this);
 
         key = getIntent().getExtras().getString("key");

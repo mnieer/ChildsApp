@@ -24,7 +24,14 @@
             android:id="@+id/singleTitle"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="Post Title"
+            android:textColor="#100d0d"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/publish_date"
+            android:textSize="12sp"
             android:textColor="#100d0d"/>
 
         <TextView
@@ -39,12 +46,14 @@
             android:id="@+id/youtubePlayerView1"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
+            app:autoPlay="false"
             android:layout_height="wrap_content"/>
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtubePlayerView2"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
+            app:autoPlay="false"
             android:layout_height="wrap_content"/>
 
 

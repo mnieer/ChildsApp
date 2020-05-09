@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+
+import com.childs.activity.posts.ChildFeedingPosts;
 import com.childs.activity.posts.NewPostUI;
 import com.childs.activity.report_child_health.ReportChildHeathListUI;
 import com.childs.activity.vaccination.VaccinationsUI;
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case 1 :
                             //Nuts Activity
-                            intent = new Intent(MainActivity.this, PostsListUI.class);
+                            intent = new Intent(MainActivity.this, ChildFeedingPosts.class);
                             intent.putExtra("postCategory","1");
                             startActivity(intent);
                          break;
@@ -136,10 +138,7 @@ public class MainActivity extends AppCompatActivity {
                             intent.putExtra("key","");
                             startActivity(intent);
                             break;
-
                     }
-
-
                 }
             });
         }
